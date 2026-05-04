@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# event-frontend
 
-## Getting Started
+Фронтенд проекта event.
 
-First, run the development server:
+## Стек
+
+- **Next.js 16** (App Router)
+- **React 19**
+- **TypeScript 5**
+- **Tailwind CSS 4** + `tw-animate-css`
+- **shadcn/ui** поверх **Base UI** (`@base-ui/react`)
+- **lucide-react** — иконки
+- **ESLint 9** (`eslint-config-next`)
+- **pnpm** — пакетный менеджер
+
+## Требования
+
+- Node.js 20+
+- pnpm 9+ (`npm i -g pnpm`)
+
+## Установка и запуск
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Открыть [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Скрипты
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Команда       | Что делает                       |
+| ------------- | -------------------------------- |
+| `pnpm dev`    | Dev-сервер с hot reload          |
+| `pnpm build`  | Production-сборка                |
+| `pnpm start`  | Запуск production-сборки         |
+| `pnpm lint`   | ESLint                           |
 
-## Learn More
+## Архитектура — Feature-Sliced Design
 
-To learn more about Next.js, take a look at the following resources:
+Проект следует [FSD](https://feature-sliced.design/). Слои сверху вниз, импортировать можно **только из нижележащих**:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+├── app/          # Next.js App Router: роуты, layout, providers
+├── widgets/      # композиции из features/entities (например, Header, EventCard)
+├── features/     # пользовательские сценарии (создание события, фильтры)
+├── entities/     # бизнес-сущности (Event, User) — модель + UI сущности
+└── shared/       # переиспользуемое, не привязанное к домену
+    ├── ui/       # shadcn + базовые компоненты
+    ├── lib/      # утилиты (cn, форматтеры)
+    ├── api/      # http-клиент, сгенерированный API
+    ├── config/   # константы, env
+    └── hooks/    # переиспользуемые хуки
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Правила:**
+- `app/` — единственный слой, который знает о роутинге Next.js.
+- Слайсы (папки внутри слоя) общаются через **public API** — `index.ts` слайса.
+- Cross-imports между слайсами одного слоя запрещены: `features/a` не импортирует из `features/b`.
 
-## Deploy on Vercel
+> ⚠️ В Next.js App Router папка `src/app/` зарезервирована под роуты. FSD-слой `app` (providers, глобальные стили) живёт там же.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Добавление shadcn-компонентов
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm dlx shadcn@latest add <component>
+```
+
+Компоненты ставятся в `src/shared/ui/` (настроено в `components.json`).
+
+## Workflow
+
+- Ветка `main` — стабильная.
+- Работа ведётся в фича-ветках, мерж через Pull Request.
+- Перед коммитом: `pnpm lint`.
+
+## Важно
+
+В `AGENTS.md` указано, что Next.js в этом проекте может содержать breaking changes относительно публичных доков. При сомнениях — смотреть `node_modules/next/dist/docs/`.
