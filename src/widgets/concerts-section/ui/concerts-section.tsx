@@ -27,11 +27,12 @@ export function ConcertsSection() {
           />
           <ContentCard
             span={4}
-            image="/images/man-suit-portrait.webp"
+            image="/images/man-suit-portrait-large.webp"
             imageAlt="Мужчина в синем костюме"
             title="Четверть века спустя: как изменилась event-индустрия с начала нулевых?"
             date="12 апреля"
             subtitle="Новость"
+            imagePosition="top"
           />
           <ContentCard
             span={4}

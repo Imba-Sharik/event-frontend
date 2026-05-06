@@ -28,11 +28,12 @@ export function PublicationsSection() {
           />
           <ContentCard
             span={4}
-            image="/images/man-suit-portrait.webp"
+            image="/images/man-suit-portrait-large.webp"
             imageAlt="Мужчина в синем костюме"
             title="Четверть века спустя: как изменилась event-индустрия с начала нулевых?"
             date="12 апреля"
             subtitle="Новость"
+            imagePosition="top"
           />
           <ContentCard
             span={4}
@@ -58,6 +59,7 @@ export function PublicationsSection() {
             title="Четверть века спустя: как изменилась event-индустрия с начала нулевых?"
             date="12 апреля"
             subtitle="Интервью"
+            imagePosition="top"
           />
         </Grid>
       </Container>
