@@ -32,7 +32,7 @@ export function SectionHeader({
 
   return (
     <div className={cn("flex flex-wrap items-end gap-x-8 gap-y-3", className)}>
-      <h2 className="text-3xl font-bold uppercase tracking-wide text-zinc-900">
+      <h2 className="font-display text-4xl font-bold text-zinc-900">
         {title}
       </h2>
       {hasTabs && (
