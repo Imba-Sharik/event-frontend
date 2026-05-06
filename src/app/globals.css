@@ -62,6 +62,8 @@
   --container-page: 1264px;
   --grid-col: 80px;
   --grid-gap: 24px;
+
+  --color-search-field-border: var(--search-field-border);
 }
 
 :root {
@@ -100,6 +102,7 @@
   --sidebar-ring: oklch(0.708 0 0);
   --brand: rgb(55 215 75);
   --brand-foreground: oklch(0.145 0 0);
+  --search-field-border: #d1dbcc;
 }
 
 .dark {
@@ -136,6 +139,7 @@
   --sidebar-ring: oklch(0.556 0 0);
   --brand: rgb(55 215 75);
   --brand-foreground: oklch(0.145 0 0);
+  --search-field-border: #d1dbcc;
 }
 
 /* 12px + weight 600 на кириллице ломается в Windows Chrome (DirectWrite) — потолок веса для caption = 500 */
