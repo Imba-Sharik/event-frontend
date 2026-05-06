@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
 import Image from "next/image";
 
+import { Pill } from "@/shared/ui/pill";
 import { cn } from "@/shared/lib/utils";
 
 export type ContentCardSpan = 3 | 4 | 6 | 8;
@@ -9,6 +9,13 @@ export type ContentCardTag = {
   text: string;
   variant?: "default" | "accent";
 };
+
+export type ContentCardImagePosition =
+  | "center"
+  | "top"
+  | "bottom"
+  | "left"
+  | "right";
 
 export interface ContentCardProps {
   image: string;
@@ -20,8 +27,17 @@ export interface ContentCardProps {
   subtitleAccent?: boolean;
   span?: ContentCardSpan;
   priority?: boolean;
+  imagePosition?: ContentCardImagePosition;
   className?: string;
 }
+
+const objectPositionClass: Record<ContentCardImagePosition, string> = {
+  center: "object-center",
+  top: "object-top",
+  bottom: "object-bottom",
+  left: "object-left",
+  right: "object-right",
+};
 
 const aspectBySpan: Record<ContentCardSpan, string> = {
   3: "aspect-[288/296]",
@@ -39,38 +55,6 @@ const colSpanBySpan: Record<ContentCardSpan, string> = {
 
 const titleClass = "text-[18px]";
 
-function PillShape({
-  variant = "default",
-  children,
-}: {
-  variant?: "default" | "accent";
-  children: ReactNode;
-}) {
-  return (
-    <span className="relative inline-flex h-6.5 items-center px-3">
-      <span
-        aria-hidden="true"
-        className={cn(
-          "absolute inset-0 rounded-full backdrop-blur-[10px]",
-          variant === "accent" ? "bg-brand/55" : "bg-neutral-500/30",
-        )}
-      />
-      {/* invisible text reserves the same width as the visible label */}
-      <span aria-hidden="true" className="caption invisible">
-        {children}
-      </span>
-    </span>
-  );
-}
-
-function PillLabel({ children }: { children: ReactNode }) {
-  return (
-    <span className="caption inline-flex h-6.5 items-center px-3 text-white">
-      {children}
-    </span>
-  );
-}
-
 export function ContentCard({
   image,
   imageAlt,
@@ -81,6 +65,7 @@ export function ContentCard({
   subtitleAccent = false,
   span = 4,
   priority = false,
+  imagePosition = "center",
   className,
 }: ContentCardProps) {
   const hasOverlay = Boolean(date || tag);
@@ -104,26 +89,18 @@ export function ContentCard({
           alt={imageAlt}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-cover"
+          className={cn("object-cover", objectPositionClass[imagePosition])}
           priority={priority}
         />
         {hasOverlay && (
-          <>
-            <div className="pointer-events-none absolute inset-x-4 top-4 flex items-center gap-2">
-              {date && <PillShape>{date}</PillShape>}
-              {tag && (
-                <PillShape
-                  variant={tag.variant === "accent" ? "accent" : "default"}
-                >
-                  {tag.text}
-                </PillShape>
-              )}
-            </div>
-            <div className="pointer-events-none absolute inset-x-4 top-4 flex items-center gap-2">
-              {date && <PillLabel>{date}</PillLabel>}
-              {tag && <PillLabel>{tag.text}</PillLabel>}
-            </div>
-          </>
+          <div className="pointer-events-none absolute inset-x-4 top-4 flex items-center gap-2">
+            {date && <Pill>{date}</Pill>}
+            {tag && (
+              <Pill variant={tag.variant === "accent" ? "accent" : "default"}>
+                {tag.text}
+              </Pill>
+            )}
+          </div>
         )}
       </div>
       <div className="flex flex-1 flex-col gap-1">

@@ -25,6 +25,7 @@ export function EventsSection() {
             date="12 апреля"
             tag={{ text: "Интересно", variant: "accent" }}
             subtitle="Москва"
+            imagePosition="top"
           />
           <ContentCard
             span={6}
