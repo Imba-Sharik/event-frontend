@@ -26,6 +26,7 @@ export function EventsSection() {
             tag={{ text: "Интересно", variant: "accent" }}
             subtitle="Москва"
             imagePosition="top"
+            priority
           />
           <ContentCard
             span={6}
