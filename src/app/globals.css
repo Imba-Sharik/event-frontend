@@ -39,6 +39,8 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -46,9 +48,15 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* 12-col grid: 1224 = 12·80 + 11·24, всё кратно 4 */
+  --container-page: 1264px;
+  --grid-col: 80px;
+  --grid-gap: 24px;
 }
 
 :root {
+  --font-sans: "Open Sans", system-ui, sans-serif;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -81,6 +89,8 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --brand: rgb(55 215 75);
+  --brand-foreground: oklch(0.145 0 0);
 }
 
 .dark {
@@ -115,6 +125,15 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --brand: rgb(55 215 75);
+  --brand-foreground: oklch(0.145 0 0);
+}
+
+/* 12px + weight 600 на кириллице ломается в Windows Chrome (DirectWrite) — потолок веса для caption = 500 */
+@utility caption {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 17px;
 }
 
 @layer base {
@@ -125,6 +144,6 @@
     @apply bg-background text-foreground;
   }
   html {
-    @apply font-sans;
+    font-family: "Open Sans", system-ui, sans-serif;
   }
 }
