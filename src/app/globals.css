@@ -50,7 +50,7 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 
   /* 12-col grid: 1224 = 12·80 + 11·24, всё кратно 4 */
-  --container-page: 1224px;
+  --container-page: 1264px;
   --grid-col: 80px;
   --grid-gap: 24px;
 }
