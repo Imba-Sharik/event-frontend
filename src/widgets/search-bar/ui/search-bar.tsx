@@ -47,7 +47,7 @@ export function SearchBar() {
     categories.find((c) => c.id === category) ?? categories[0];
 
   return (
-    <section className="pb-12 pt-24 sm:pb-16 sm:pt-32">
+    <section className="pb-12 pt-24 sm:pb-28 sm:pt-40">
       <Container className="flex flex-col items-center gap-5 sm:gap-7">
         <div className="w-full min-w-0 overflow-x-auto overscroll-x-contain [-webkit-overflow-scrolling:touch]">
           <div className="flex min-w-full justify-center">
