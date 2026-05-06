@@ -3,6 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
+import { buttonVariants } from "@/shared/ui/button";
 import { cn } from "@/shared/lib/utils";
 
 export interface SectionHeaderTab {
@@ -41,7 +42,7 @@ export function SectionHeader({
               key={tab.value}
               type="button"
               onClick={() => onTabChange?.(tab.value)}
-              className="font-open-sans text-[21px] font-normal text-black opacity-20"
+              className="text-[21px] font-normal text-black opacity-20"
             >
               {tab.label}
             </button>
@@ -51,10 +52,13 @@ export function SectionHeader({
       {seeAllHref && (
         <Link
           href={seeAllHref}
-          className="ml-auto inline-flex h-10 items-center gap-2 rounded-full bg-zinc-900 px-4 text-sm font-medium text-white transition-colors hover:bg-zinc-800"
+          className={cn(
+            buttonVariants({ variant: "pill", size: "pill" }),
+            "ml-auto",
+          )}
         >
           {seeAllLabel}
-          <ArrowRight className="size-4" />
+          <ArrowRight data-icon="inline-end" className="size-4" />
         </Link>
       )}
     </div>

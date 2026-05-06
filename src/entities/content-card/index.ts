@@ -1,6 +1,6 @@
 export {
   ContentCard,
   type ContentCardProps,
-  type ContentCardSize,
+  type ContentCardSpan,
   type ContentCardTag,
 } from "./ui/content-card";

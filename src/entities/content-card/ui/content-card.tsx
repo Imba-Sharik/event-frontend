@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { cn } from "@/shared/lib/utils";
 
-export type ContentCardSize = "sm" | "md" | "lg";
+export type ContentCardSpan = 3 | 4 | 6 | 8;
 
 export type ContentCardTag = {
   text: string;
@@ -18,22 +18,26 @@ export interface ContentCardProps {
   tag?: ContentCardTag;
   subtitle?: string;
   subtitleAccent?: boolean;
-  size?: ContentCardSize;
+  span?: ContentCardSpan;
   priority?: boolean;
   className?: string;
 }
 
-const imageAspectBySize: Record<ContentCardSize, string> = {
-  sm: "aspect-[281/294]",
-  md: "aspect-[587/371]",
-  lg: "aspect-[792/371]",
+const aspectBySpan: Record<ContentCardSpan, string> = {
+  3: "aspect-[288/296]",
+  4: "aspect-[392/372]",
+  6: "aspect-[600/372]",
+  8: "aspect-[808/372]",
 };
 
-const titleClassBySize: Record<ContentCardSize, string> = {
-  sm: "text-[18px]",
-  md: "text-[21px]",
-  lg: "text-[21px]",
+const colSpanBySpan: Record<ContentCardSpan, string> = {
+  3: "col-span-6 sm:col-span-4 lg:col-span-3",
+  4: "col-span-6 lg:col-span-4",
+  6: "col-span-12 lg:col-span-6",
+  8: "col-span-12 lg:col-span-8",
 };
+
+const titleClass = "text-[18px]";
 
 function PillShape({
   variant = "default",
@@ -52,7 +56,7 @@ function PillShape({
         )}
       />
       {/* invisible text reserves the same width as the visible label */}
-      <span aria-hidden="true" className="invisible font-open-sans text-xs font-semibold">
+      <span aria-hidden="true" className="caption invisible">
         {children}
       </span>
     </span>
@@ -61,7 +65,7 @@ function PillShape({
 
 function PillLabel({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex h-6.5 items-center px-3 font-open-sans text-xs font-semibold text-white">
+    <span className="caption inline-flex h-6.5 items-center px-3 text-white">
       {children}
     </span>
   );
@@ -75,18 +79,24 @@ export function ContentCard({
   tag,
   subtitle,
   subtitleAccent = false,
-  size = "md",
+  span = 4,
   priority = false,
   className,
 }: ContentCardProps) {
   const hasOverlay = Boolean(date || tag);
 
   return (
-    <article className={cn("flex h-full flex-col gap-3", className)}>
+    <article
+      className={cn(
+        "flex h-full flex-col gap-3",
+        colSpanBySpan[span],
+        className,
+      )}
+    >
       <div
         className={cn(
           "relative overflow-hidden rounded-2xl bg-zinc-100",
-          imageAspectBySize[size],
+          aspectBySpan[span],
         )}
       >
         <Image
@@ -119,8 +129,8 @@ export function ContentCard({
       <div className="flex flex-1 flex-col gap-1">
         <h3
           className={cn(
-            "font-open-sans font-normal leading-snug text-black",
-            titleClassBySize[size],
+            "max-w-[95%] font-normal leading-snug text-black",
+            titleClass,
           )}
         >
           {title}
@@ -128,7 +138,7 @@ export function ContentCard({
         {subtitle && (
           <p
             className={cn(
-              "mt-auto font-open-sans text-xs font-semibold",
+              "caption mt-auto",
               subtitleAccent ? "text-brand" : "text-black/26",
             )}
           >

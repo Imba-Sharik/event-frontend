@@ -2,16 +2,13 @@ import type { HTMLAttributes } from "react";
 
 import { cn } from "@/shared/lib/utils";
 
-export function Container({
+export function Grid({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn(
-        "mx-auto w-full max-w-page px-4 sm:px-6 lg:px-8",
-        className,
-      )}
+      className={cn("grid grid-cols-12 gap-x-6 gap-y-8", className)}
       {...props}
     />
   );
