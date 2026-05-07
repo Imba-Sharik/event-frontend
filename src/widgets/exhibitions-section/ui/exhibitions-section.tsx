@@ -2,6 +2,7 @@ import { ContentCard } from "@/entities/content-card";
 import { Container } from "@/shared/ui/container";
 import { Grid } from "@/shared/ui/grid";
 import { SectionHeader } from "@/shared/ui/section-header";
+import { images } from "@/shared/lib/images";
 
 export function ExhibitionsSection() {
   return (
@@ -19,30 +20,29 @@ export function ExhibitionsSection() {
         <Grid>
           <ContentCard
             span={3}
-            image="/images/woman-monstera-leaf.webp"
+            image={images.womanMonsteraLeaf}
             imageAlt="Девушка с листом монстеры"
             title="Предметы искусства 20 века"
             date="12 апреля"
             tag={{ text: "Интересно", variant: "accent" }}
-            priority
           />
           <ContentCard
             span={3}
-            image="/images/urban-walking.webp"
+            image={images.urbanWalking}
             imageAlt="Городская архитектура"
             title="Event-индустрия"
             date="12 апреля"
           />
           <ContentCard
             span={3}
-            image="/images/architecture-yellow.webp"
+            image={images.architectureYellow}
             imageAlt="Архитектурная композиция"
             title="Предметы искусства"
             date="12 апреля"
           />
           <ContentCard
             span={3}
-            image="/images/woman-hat-field.webp"
+            image={images.womanHatField}
             imageAlt="Девушка в шляпе"
             title="Предметы искусства 20 века"
             date="12 апреля"

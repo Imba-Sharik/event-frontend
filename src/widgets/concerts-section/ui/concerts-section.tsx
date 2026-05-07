@@ -2,6 +2,7 @@ import { ContentCard } from "@/entities/content-card";
 import { Container } from "@/shared/ui/container";
 import { Grid } from "@/shared/ui/grid";
 import { SectionHeader } from "@/shared/ui/section-header";
+import { images } from "@/shared/lib/images";
 
 export function ConcertsSection() {
   return (
@@ -19,7 +20,7 @@ export function ConcertsSection() {
         <Grid>
           <ContentCard
             span={4}
-            image="/images/couple-portrait.webp"
+            image={images.couplePortrait}
             imageAlt="Дмитрий Лапатин"
             title="Дмитрий Лапатин: «Сегодня важно не быть old money, а греметь по-новому»"
             date="12 апреля"
@@ -27,7 +28,7 @@ export function ConcertsSection() {
           />
           <ContentCard
             span={4}
-            image="/images/man-suit-portrait-large.webp"
+            image={images.manSuitPortraitLarge}
             imageAlt="Мужчина в синем костюме"
             title="Четверть века спустя: как изменилась event-индустрия с начала нулевых?"
             date="12 апреля"
@@ -36,7 +37,7 @@ export function ConcertsSection() {
           />
           <ContentCard
             span={4}
-            image="/images/burj-al-arab-dubai.webp"
+            image={images.burjAlArabDubai}
             imageAlt="Бурдж-эль-Араб"
             title="Как изменилась event-индустрия с начала нулевых?"
             date="12 апреля"
