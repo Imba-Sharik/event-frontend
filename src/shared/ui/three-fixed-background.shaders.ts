@@ -5,9 +5,11 @@ uniform vec2 uParallax;
 
 attribute vec3 position;
 varying vec2 vUv;
+varying vec2 vScreenUv;
 
 void main() {
-  vUv = position.xy * 0.5 + 0.5 + uParallax;
+  vScreenUv = position.xy * 0.5 + 0.5;
+  vUv = vScreenUv + uParallax;
   gl_Position = vec4(position.xy, 0.0, 1.0);
 }
 `;
@@ -19,8 +21,11 @@ uniform vec3 uBaseRgb;
 uniform float uTime;
 uniform float uAspect;
 uniform float uIntro;
+uniform float uBlobScale;
+uniform float uScrollProgress;
 
 varying vec2 vUv;
+varying vec2 vScreenUv;
 
 float hash21(vec2 p) {
   vec3 p3 = fract(vec3(p.xyx) * 0.1031);
@@ -34,8 +39,9 @@ void main() {
   vec3 glowRgbEdge = vec3(248.0 / 255.0, 255.0 / 255.0, 218.0 / 255.0);
 
   vec2 p = (vUv - 0.5) * vec2(uAspect, 1.0);
+  vec2 screenP = (vScreenUv - 0.5) * vec2(uAspect, 1.0);
 
-  const int N = 4;
+  const int N = 5;
   vec3 glowRgbAcc = vec3(0.0);
   float glowWAcc = 0.0;
 
@@ -60,27 +66,38 @@ void main() {
       sin(ang * 1.27 + uTime * spd * 0.93)
     );
 
+    float xScale = min(uAspect, 1.0);
     vec2 quadrant = vec2(
-      mod(fi, 2.0) < 1.0 ? -0.5 : 0.5,
+      (mod(fi, 2.0) < 1.0 ? -0.5 : 0.5) * xScale,
       fi < 2.0 ? -0.5 : 0.5
     ) * 0.92;
     vec2 jitter = vec2(
-      hash21(seed + 1.7) * 0.34 - 0.17,
+      (hash21(seed + 1.7) * 0.34 - 0.17) * xScale,
       hash21(seed + 3.1) * 0.34 - 0.17
     );
     vec2 base = quadrant + jitter;
-    vec2 center = base + roam * (0.14 + h0 * 0.22);
+    vec2 center = base + roam * vec2(xScale, 1.0) * (0.14 + h0 * 0.22);
+    float bottomBlob = step(3.5, fi);
+    center = mix(
+      center,
+      vec2(
+        (hash21(seed + 5.9) * 0.44 - 0.22) * xScale,
+        mix(-0.86, -0.42, smoothstep(0.0, 1.0, uScrollProgress))
+      ) + roam * vec2(xScale, 1.0) * 0.055,
+      bottomBlob
+    );
 
     float pulse = 0.88 + 0.12 * sin(uTime * 0.65 + fi * 1.41);
+    float bottomScale = mix(1.0, 1.18, bottomBlob);
     float rx =
-      (0.0425 + h1 * 0.24) * 2.0 * (0.85 + 0.26 * sin(uTime * 0.35 + fi)) * pulse * 1.85;
+      (0.0425 + h1 * 0.24) * 2.0 * (0.85 + 0.26 * sin(uTime * 0.35 + fi)) * pulse * 1.85 * uBlobScale * bottomScale;
     float ry =
-      (0.036 + h2 * 0.21) * 2.0 * (0.9 + 0.22 * cos(uTime * 0.28 + fi * 0.7)) * pulse * 1.85;
+      (0.036 + h2 * 0.21) * 2.0 * (0.9 + 0.22 * cos(uTime * 0.28 + fi * 0.7)) * pulse * 1.85 * uBlobScale * bottomScale;
 
     float rot = uTime * (0.03 + h3 * 0.05) + h0 * 6.2831853;
     float cr = cos(rot);
     float sr = sin(rot);
-    vec2 q = p - center;
+    vec2 q = mix(p, screenP, bottomBlob) - center;
     vec2 pr = vec2(cr * q.x - sr * q.y, sr * q.x + cr * q.y);
     vec2 d = pr / vec2(rx, ry);
     float dist = length(d);

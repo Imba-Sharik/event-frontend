@@ -18,6 +18,8 @@ type UniformPack = {
   uParallax: { value: Vector2 };
   uIntro: { value: number };
   uBaseRgb: { value: Vector3 };
+  uBlobScale: { value: number };
+  uScrollProgress: { value: number };
 };
 
 function cssVarToRgb01(varName: string): [number, number, number] {
@@ -45,6 +47,8 @@ function createUniformPack(): UniformPack {
     uParallax: { value: new Vector2(0, 0) },
     uIntro: { value: 0 },
     uBaseRgb: { value: new Vector3(1, 1, 1) },
+    uBlobScale: { value: 1 },
+    uScrollProgress: { value: 0 },
   };
 }
 
@@ -76,6 +80,8 @@ function createFullscreenBridge() {
           uAspect: pack.uAspect,
           uParallax: pack.uParallax,
           uIntro: pack.uIntro,
+          uBlobScale: pack.uBlobScale,
+          uScrollProgress: pack.uScrollProgress,
         },
         vertexShader: solidFillVertexShader,
         fragmentShader: solidFillFragmentShader,
@@ -147,6 +153,26 @@ function FullscreenShaderPass() {
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
+  useEffect(() => {
+    const coarsePointer = window.matchMedia("(pointer: coarse)");
+    const hoverNone = window.matchMedia("(hover: none)");
+    const sync = () => {
+      const pack = bridge.uniformPack();
+      if (!pack) return;
+      const hasTouch = navigator.maxTouchPoints > 0;
+      pack.uBlobScale.value =
+        hasTouch || coarsePointer.matches || hoverNone.matches ? 2.45 : 1;
+    };
+
+    sync();
+    coarsePointer.addEventListener("change", sync);
+    hoverNone.addEventListener("change", sync);
+    return () => {
+      coarsePointer.removeEventListener("change", sync);
+      hoverNone.removeEventListener("change", sync);
+    };
+  }, [bridge]);
+
   const parallaxStrength = 0.00022;
 
   useFrame((state) => {
@@ -159,6 +185,14 @@ function FullscreenShaderPass() {
     pack.uAspect.value =
       state.size.width / Math.max(state.size.height, 1e-6);
     const elapsed = timer.getElapsed();
+    const maxScroll = Math.max(
+      document.documentElement.scrollHeight - window.innerHeight,
+      1,
+    );
+    pack.uScrollProgress.value = Math.min(
+      1,
+      Math.max(0, window.scrollY / maxScroll),
+    );
 
     if (reduceMotionRef.current) {
       pack.uParallax.value.set(0, 0);
