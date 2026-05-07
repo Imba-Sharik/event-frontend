@@ -9,6 +9,7 @@ import "@fontsource/open-sans/latin-400.css";
 import "@fontsource/open-sans/latin-500.css";
 import "@fontsource/open-sans/latin-600.css";
 import "@fontsource/open-sans/latin-700.css";
+import { ThreeFixedBackground } from "@/shared/ui/three-fixed-background";
 import "./globals.css";
 
 const geistMono = Geist_Mono({
@@ -31,7 +32,10 @@ export default function RootLayout({
       lang="en"
       className={`${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ThreeFixedBackground />
+        {children}
+      </body>
     </html>
   );
 }

@@ -68,7 +68,7 @@
 
 :root {
   --font-sans: "Open Sans", system-ui, sans-serif;
-  --background: oklch(1 0 0);
+  --background: #f7f7f7;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -153,10 +153,13 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
     font-family: "Open Sans", system-ui, sans-serif;
+    /* Тот же --background, что и база шейдера three-fixed-background (uBaseRgb из var(--background)) */
+    @apply bg-background;
+  }
+  body {
+    /* ВАЖНО: body должен быть прозрачным, иначе перекрывает Canvas с -z-10 (он в stacking context body) */
+    @apply bg-transparent text-foreground;
   }
 }
