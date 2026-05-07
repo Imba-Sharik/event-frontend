@@ -6,7 +6,7 @@ export function BestSection() {
     <section className="py-16 md:py-32">
       <Container className="flex flex-col items-center gap-6 py-10 text-sm lg:items-center lg:justify-between lg:gap-8 lg:py-12">
         <div className="w-full min-w-0 text-center pb-4">
-          <h2 className="font-display text-[100px] sm:text-[120px] md:text-[186px] font-bold">
+          <h2 className="font-display text-[80px] sm:text-[120px] md:text-[186px] font-bold">
             Лучшее
           </h2>
         </div>
