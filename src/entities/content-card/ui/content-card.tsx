@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 
 import { Pill } from "@/shared/ui/pill";
 import { cn } from "@/shared/lib/utils";
@@ -18,7 +18,7 @@ export type ContentCardImagePosition =
   | "right";
 
 export interface ContentCardProps {
-  image: string;
+  image: StaticImageData;
   imageAlt: string;
   title: string;
   date?: string;
@@ -40,10 +40,10 @@ const objectPositionClass: Record<ContentCardImagePosition, string> = {
 };
 
 const aspectBySpan: Record<ContentCardSpan, string> = {
-  3: "aspect-[288/296]",
-  4: "aspect-[392/372]",
-  6: "aspect-[600/372]",
-  8: "aspect-[808/372]",
+  3: "288 / 296",
+  4: "392 / 372",
+  6: "600 / 372",
+  8: "808 / 372",
 };
 
 const colSpanBySpan: Record<ContentCardSpan, string> = {
@@ -79,10 +79,8 @@ export function ContentCard({
       )}
     >
       <div
-        className={cn(
-          "relative overflow-hidden rounded-2xl bg-zinc-100",
-          aspectBySpan[span],
-        )}
+        className="relative overflow-hidden rounded-2xl bg-zinc-100"
+        style={{ aspectRatio: aspectBySpan[span] }}
       >
         <Image
           src={image}
@@ -91,6 +89,7 @@ export function ContentCard({
           sizes="(max-width: 768px) 100vw, 33vw"
           className={cn("object-cover", objectPositionClass[imagePosition])}
           priority={priority}
+          placeholder="blur"
         />
         {hasOverlay && (
           <div className="pointer-events-none absolute inset-x-4 top-4 flex items-center gap-2">
