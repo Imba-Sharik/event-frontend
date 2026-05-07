@@ -79,7 +79,7 @@ export function ContentCard({
       )}
     >
       <div
-        className="relative overflow-hidden rounded-2xl bg-zinc-100"
+        className="@container/card relative overflow-hidden rounded-2xl bg-zinc-100"
         style={{ aspectRatio: aspectBySpan[span] }}
       >
         <Image
@@ -92,7 +92,7 @@ export function ContentCard({
           placeholder="blur"
         />
         {hasOverlay && (
-          <div className="pointer-events-none absolute inset-x-4 top-4 flex items-center gap-2">
+          <div className="pointer-events-none absolute inset-x-2 top-2 flex flex-wrap items-center gap-1 @[14rem]/card:inset-x-4 @[14rem]/card:top-4 @[14rem]/card:gap-2">
             {date && <Pill>{date}</Pill>}
             {tag && (
               <Pill variant={tag.variant === "accent" ? "accent" : "default"}>

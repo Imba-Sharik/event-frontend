@@ -28,7 +28,14 @@ export function Header() {
         </nav>
 
         <Link href="/" className="justify-self-center" aria-label="event.ru">
-          <Image src="/logo.svg" alt="event.ru" width={180} height={38} priority />
+          <Image
+            src="/logo.svg"
+            alt="event.ru"
+            width={180}
+            height={38}
+            priority
+            className="h-7 w-auto sm:h-9.5"
+          />
         </Link>
 
         <Link

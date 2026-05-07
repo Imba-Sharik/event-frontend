@@ -14,7 +14,7 @@ export function Pill({ children, variant = "default", className }: PillProps) {
   return (
     <span
       className={cn(
-        "relative inline-flex h-6.5 items-center px-3",
+        "relative inline-flex h-6 items-center whitespace-nowrap px-3",
         className,
       )}
     >
