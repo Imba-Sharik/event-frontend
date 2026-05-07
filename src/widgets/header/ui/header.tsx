@@ -14,8 +14,8 @@ const navLinks = [
 export function Header() {
   return (
     <header className="border-b border-zinc-200">
-      <Container className="grid h-20 grid-cols-3 items-center">
-        <nav className="flex items-center gap-8">
+      <Container className="flex h-20 items-center justify-between md:grid md:grid-cols-3">
+        <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}

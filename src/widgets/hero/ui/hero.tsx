@@ -71,7 +71,7 @@ export function Hero() {
             <CarouselContent className="ml-0">
               {slides.map((slide, index) => (
                 <CarouselItem key={index} className="pl-0">
-                  <div className="relative aspect-24/9 w-full">
+                  <div className="relative aspect-4/5 w-full sm:aspect-video lg:aspect-24/9">
                     <Image
                       src={slide.image}
                       alt=""
@@ -82,7 +82,7 @@ export function Hero() {
                       placeholder="blur"
                     />
                     <Pill className="absolute left-6 top-6">{slide.date}</Pill>
-                    <h1 className="absolute inset-x-0 bottom-16 mx-auto max-w-2xl text-center font-display text-4xl font-bold text-white">
+                    <h1 className="absolute inset-x-0 bottom-8 mx-auto max-w-2xl px-4 text-center font-display text-xl font-bold text-white sm:bottom-12 sm:text-2xl lg:bottom-16 lg:text-4xl">
                       {slide.title}
                     </h1>
                   </div>
@@ -90,7 +90,7 @@ export function Hero() {
               ))}
             </CarouselContent>
           </Carousel>
-          <div className="absolute inset-x-0 bottom-8 flex justify-center gap-1">
+          <div className="absolute inset-x-0 bottom-4 flex justify-center gap-1 sm:bottom-8">
             {slides.map((_, index) => (
               <button
                 key={index}

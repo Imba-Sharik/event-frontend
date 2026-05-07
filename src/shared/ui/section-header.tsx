@@ -32,17 +32,17 @@ export function SectionHeader({
 
   return (
     <div className={cn("flex flex-wrap items-end gap-x-8 gap-y-3", className)}>
-      <h2 className="font-display text-4xl font-bold text-zinc-900">
+      <h2 className="font-display text-2xl font-bold text-zinc-900 sm:text-3xl lg:text-4xl">
         {title}
       </h2>
       {hasTabs && (
-        <div className="flex items-center gap-6">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           {tabs.map((tab) => (
             <button
               key={tab.value}
               type="button"
               onClick={() => onTabChange?.(tab.value)}
-              className="text-[21px] font-normal text-black opacity-20"
+              className="text-base font-normal text-black opacity-20 sm:text-lg lg:text-[21px]"
             >
               {tab.label}
             </button>
@@ -50,16 +50,15 @@ export function SectionHeader({
         </div>
       )}
       {seeAllHref && (
-        <Link
-          href={seeAllHref}
-          className={cn(
-            buttonVariants({ variant: "pill", size: "pill" }),
-            "ml-auto",
-          )}
-        >
-          {seeAllLabel}
-          <ArrowRight data-icon="inline-end" className="size-4" />
-        </Link>
+        <div className="basis-full sm:ml-auto sm:basis-auto">
+          <Link
+            href={seeAllHref}
+            className={buttonVariants({ variant: "pill", size: "pill" })}
+          >
+            {seeAllLabel}
+            <ArrowRight data-icon="inline-end" className="size-4" />
+          </Link>
+        </div>
       )}
     </div>
   );
