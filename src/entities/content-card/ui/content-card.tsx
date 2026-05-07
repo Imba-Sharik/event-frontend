@@ -53,7 +53,7 @@ const colSpanBySpan: Record<ContentCardSpan, string> = {
   8: "col-span-12 lg:col-span-8",
 };
 
-const titleClass = "text-[18px]";
+const titleClass = "text-sm sm:text-base lg:text-[18px]";
 
 export function ContentCard({
   image,
